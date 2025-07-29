@@ -23,6 +23,8 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
+            position: relative;
+            padding-bottom: 60px;
         }
 
         .container {
@@ -37,18 +39,22 @@
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
         }
 
-        h2 {
-            font-size: 26px;
+        h1 {
+            font-size: 28px;
             margin-bottom: 24px;
             color: #ffffff;
             font-weight: 500;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
+        .upload-area {
+            margin-bottom: 24px;
+        }
+
         input[type="file"] {
             display: block;
-            margin: 0 auto 24px;
-            padding: 10px 12px;
+            margin: 0 auto 16px;
+            padding: 12px;
             background-color: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 12px;
@@ -56,6 +62,7 @@
             color: #ffffff;
             transition: all 0.3s ease;
             width: 100%;
+            cursor: pointer;
         }
 
         input[type="file"]:hover {
@@ -74,6 +81,8 @@
             transition: all 0.3s ease;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             font-weight: 500;
+            width: 100%;
+            max-width: 200px;
         }
 
         button:hover {
@@ -97,18 +106,84 @@
             min-height: 40px;
             transition: all 0.3s ease;
         }
+        
+        /* 紧凑版的运行时间样式 */
+        .runtime-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: transparent;
+            padding: 6px 0;
+            text-align: center;
+            z-index: 1000;
+        }
+        
+        .runtime-content {
+            display: inline-block;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 5px 12px;
+            border-radius: 12px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 13px;
+        }
+        
+        .runtime-label {
+            font-size: 13px;
+            font-weight: 500;
+            margin-right: 6px;
+            color: #ffffff;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+            letter-spacing: 0.5px;
+        }
+        
+        .runtime-value {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 3px;
+        }
+        
+        .runtime-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 35px;
+        }
+        
+        .runtime-number {
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            font-family: 'Arial', sans-serif;
+            letter-spacing: 0.5px;
+        }
+        
+        .runtime-text {
+            font-size: 9px;
+            opacity: 0.9;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 1px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>图片上传</h2>
-        <form id="uploadForm">
-            <input type="file" id="fileInput" name="file" accept="image/*" required />
-            <button type="submit">🏀上传图片</button>
-        </form>
+        <h1>文件上传</h1>
+        <div class="upload-area">
+            <form id="uploadForm">
+                <input type="file" id="fileInput" name="file" accept="image/*" required />
+                <button type="submit">上传文件</button>
+            </form>
+        </div>
         <div id="result" class="result"></div>
     </div>
-    
+
     <!-- 网站运行时间显示 -->
     <div class="runtime-container">
         <div class="runtime-content">
@@ -135,7 +210,8 @@
     </div>
 
     <script>
-        const form = document.getElementById('uploadForm');
+        // 文件上传功能
+    const form = document.getElementById('uploadForm');
         const resultDiv = document.getElementById('result');
 
         form.addEventListener('submit', async (e) => {
@@ -171,7 +247,8 @@
                 resultDiv.innerHTML = `<p>请求失败：${error.message}</p>`;
             }
         });
-                // 计算并显示网站运行时间
+
+        // 计算并显示网站运行时间
         function updateRuntime() {
             // 设置网站开始时间 - 这里使用当前时间作为示例
             const startTime = new Date();
